@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Noah Ledford | Lighting Designer</title>
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#07070b;--card:#101018;--text:#f4f1ea;--muted:#8d8b9b;--line:#23232e;--a:#ffb347;
+--serif:Georgia,"Times New Roman",serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--x:50%;--y:30%}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:70px;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+#dark{position:fixed;inset:0;z-index:8;pointer-events:none;opacity:0;transition:opacity .6s;background:radial-gradient(circle 190px at var(--x) var(--y),transparent 0,transparent 35%,rgba(0,0,0,.97) 100%)}
+body.bo #dark{opacity:1}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;gap:14px;justify-content:space-between;align-items:center;padding:12px 5vw;background:rgba(7,7,11,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav b{font-family:var(--serif);letter-spacing:.08em;font-size:.95rem}
+.tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.gel{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0}
+.gel.on{border-color:#fff;box-shadow:0 0 12px currentColor}
+.pill{background:none;border:1px solid var(--line);color:var(--text);padding:6px 14px;border-radius:99px;cursor:pointer;font:inherit;font-size:.8rem}
+.pill:hover,.pill.on{border-color:var(--a);color:var(--a)}
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;position:relative;overflow:hidden;
+ background:radial-gradient(circle 420px at var(--x) var(--y),color-mix(in srgb,var(--a) 30%,transparent),transparent 70%)}
+.beam{position:absolute;top:-10%;left:50%;width:2px;height:120%;pointer-events:none}
+.eyebrow{color:var(--a);text-transform:uppercase;letter-spacing:.3em;font-size:.8rem;position:relative}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,13vw,9.5rem);line-height:.92;margin:.25em 0;letter-spacing:-.02em;position:relative;
+ background:radial-gradient(circle 300px at var(--x) var(--y),#fff 0,var(--a) 45%,#3a3944 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:520px;color:var(--muted);font-size:1.15rem;position:relative}
+.hint{font-size:.75rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-top:26px;position:relative}
+.btn{display:inline-block;margin-top:14px;padding:13px 28px;background:var(--a);color:#111;text-decoration:none;border-radius:99px;font-weight:600;position:relative;transition:box-shadow .3s}
+.btn:hover{box-shadow:0 0 36px var(--a)}
+.mq{overflow:hidden;border-block:1px solid var(--line);padding:14px 0;white-space:nowrap;background:var(--card)}
+.mq div{display:inline-block;animation:sl 38s linear infinite;font-family:var(--serif);font-size:1.4rem;color:var(--muted)}
+.mq i{color:var(--a);font-style:normal;margin:0 20px}
+@keyframes sl{to{transform:translateX(-50%)}}
+section{padding:90px 5vw;max-width:1200px;margin:0 auto}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,6vw,3.4rem);margin:0 0 8px}
+h2 em{color:var(--a)}
+.sub{color:var(--muted);margin:0 0 28px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chip{background:none;border:1px solid var(--line);color:var(--muted);padding:7px 16px;border-radius:99px;cursor:pointer;font:inherit;font-size:.85rem}
+.chip.on{border-color:var(--a);color:var(--a);box-shadow:0 0 14px color-mix(in srgb,var(--a) 40%,transparent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;color:inherit;font:inherit;padding:0;opacity:.6;filter:brightness(.7);transition:all .35s;transform:translateY(8px)}
+.card.in{transform:none}
+.card:hover,.card:focus-visible{opacity:1;filter:none;transform:translateY(-6px) scale(1.02);border-color:var(--a);box-shadow:0 14px 50px color-mix(in srgb,var(--a) 35%,transparent)}
+.thumb{aspect-ratio:4/3;display:flex;align-items:flex-end;padding:14px;background-size:cover;background-position:center;position:relative}
+.thumb:after{content:"";position:absolute;inset:0;background:conic-gradient(from 200deg at 50% -20%,transparent 0 60deg,rgba(255,255,255,.14) 80deg,transparent 100deg);opacity:0;transition:.4s}
+.card:hover .thumb:after{opacity:1}
+.cue{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem;color:#fff;background:rgba(0,0,0,.55);padding:3px 9px;border-radius:6px;letter-spacing:.1em}
+.info{padding:14px 16px}
+.info h3{margin:0;font-family:var(--serif);font-weight:400;font-size:1.25rem}
+.info span{display:block;color:var(--a);font-size:.85rem}
+.info small{color:var(--muted)}
+.group{margin:40px 0 14px;color:var(--muted);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem}
+.about{display:grid;grid-template-columns:1.2fr 1fr;gap:44px}
+@media(max-width:700px){.about{grid-template-columns:1fr}}
+.about p{color:#cfccd8}
+.roles{display:grid;gap:10px}
+.role{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);padding:12px 16px;border-radius:10px;font-size:.95rem}
+.bar{width:90px;height:6px;background:var(--line);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--a);box-shadow:0 0 10px var(--a);width:0;transition:width 1.2s}
+footer{border-top:1px solid var(--line);text-align:center;color:var(--muted);padding:40px 5vw;font-size:.85rem}
+.modal{position:fixed;inset:0;z-index:20;background:rgba(7,7,11,.97);overflow-y:auto;padding:calc(24px + env(safe-area-inset-top,0px)) 5vw 40px;display:none}
+.modal.open{display:block}
+.modal header{display:flex;justify-content:space-between;align-items:flex-start;max-width:1200px;margin:0 auto 22px}
+.modal h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,5vw,3rem);margin:0}
+.x{background:none;border:1px solid var(--line);color:var(--text);border-radius:99px;width:44px;height:44px;font-size:1.3rem;cursor:pointer}
+.x:hover{border-color:var(--a);color:var(--a)}
+.gal{max-width:1200px;margin:0 auto;columns:2 400px;column-gap:14px}
+.ph{margin:0 0 14px;break-inside:avoid;border-radius:8px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.ph img{width:100%;display:block;max-height:600px;object-fit:cover}
+.ph video{width:100%;display:block;max-height:600px}
+.ph div{display:flex;align-items:center;justify-content:center;color:var(--muted);font:.8rem ui-monospace,Menlo,monospace}
+</style>
+</head>
+<body>
+<div id="dark"></div>
+<nav>
+  <b>N. LEDFORD</b>
+  <div class="tools">
+    <span id="gels"></span>
+    <button class="pill" id="bo">Blackout</button>
+  </div>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="eyebrow">Lighting Designer &middot; Stage Manager &middot; Audio</div>
+  <h1>Noah<br>Ledford</h1>
+  <p>I make light tell the story. If you can feel the scene before you understand why, I did my job.</p>
+  <div><a class="btn" href="#work">Enter the show</a></div>
+  <div class="hint">Move your cursor: you're holding the followspot</div>
+</header>
+
+<div class="mq"><div id="mq"></div></div>
+
+<section id="work">
+  <h2>The <em>Cue List</em></h2>
+  <p class="sub">Every show is a cue. Hover to bring it up, tap to open the photos.</p>
+  <div class="chips" id="chips"></div>
+  <div id="list"></div>
+</section>
+
+<section id="about">
+  <h2>Behind the <em>board</em></h2>
+  <div class="about">
+    <div>
+      <p>I'm Noah Ledford, a lighting designer from big musicals like <i>Mean Girls</i> and <i>The Hunchback of Notre Dame</i> to the soft moments of <i>A Monster Calls</i>.</p>
+      <p>I've also called shows, run sound and managed productions. I know what every department needs and speak all their languages. That makes the room calmer and the show better.</p>
+    </div>
+    <div class="roles" id="roles"></div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Ready for <em>lights up?</em></h2>
+  <p class="sub">Let's build something people remember.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:900px;margin:40px auto">
+    <div>
+      <h3 style="font-family:var(--serif);font-weight:400;margin-bottom:20px">Get in touch</h3>
+      <p style="margin:12px 0"><strong>Email:</strong><br><a href="mailto:noah.ledford.theater@gmail.com" style="color:var(--a);text-decoration:none">noah.ledford.theater@gmail.com</a></p>
+      <p style="margin:12px 0"><strong>Phone:</strong><br><a href="tel:629-543-7165" style="color:var(--a);text-decoration:none">629-543-7165</a></p>
+    </div>
+    <div>
+      <h3 style="font-family:var(--serif);font-weight:400;margin-bottom:20px">References</h3>
+      <div style="font-size:.95rem;line-height:1.8">
+        <div style="margin-bottom:16px">
+          <strong>Kevin Welch</strong><br>
+          <a href="tel:615-308-2233" style="color:var(--a);text-decoration:none">(615) 308-2233</a><br>
+          <a href="mailto:welchk@rcschools.net" style="color:var(--a);text-decoration:none">welchk@rcschools.net</a>
+        </div>
+        <div style="margin-bottom:16px">
+          <strong>Donald Fann</strong><br>
+          <a href="tel:615-542-6285" style="color:var(--a);text-decoration:none">(615) 542-6285</a><br>
+          <a href="mailto:fannd@rcschools.net" style="color:var(--a);text-decoration:none">fannd@rcschools.net</a>
+        </div>
+        <div>
+          <strong>Lindsey Duggin</strong><br>
+          <a href="tel:615-715-9378" style="color:var(--a);text-decoration:none">(615) 715-9378</a><br>
+          <a href="mailto:dugginL@rcschools.net" style="color:var(--a);text-decoration:none">dugginL@rcschools.net</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>&copy; 2026 Noah Ledford &middot; Houselights to half</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <header><div><h3 id="mt"></h3><div id="ms" style="color:var(--a)"></div></div><button class="x" id="close" aria-label="Close">&times;</button></header>
+  <div class="gal" id="gal"></div>
+</div>
+
+<script>
+// To add real photos: put image data URIs in a show's "images" array.
+var SHOWS=[
+ {t:"Mean Girls",r:"LD/SM",n:14,c:"Lighting,Stage Management",images:["Photos/MG/%23%20(1).JPG","Photos/MG/%23%20(2).JPG","Photos/MG/%23%20(3).JPG","Photos/MG/%23%20(4).JPG","Photos/MG/%23%20(5).JPG","Photos/MG/%23%20(6).JPG","Photos/MG/%23%20(7).JPG","Photos/MG/%23%20(8).JPG","Photos/MG/%23%20(9).JPG","Photos/MG/%23%20(10).JPG","Photos/MG/%23%20(11).JPG","Photos/MG/%23%20(12).JPG","Photos/MG/%23%20(1).PNG"]},
+ {t:"Beetlejuice",r:"LD/SM",n:15,c:"Lighting,Stage Management",images:["Photos/BJ/%23%20(1).JPG","Photos/BJ/%23%20(2).JPG","Photos/BJ/%23%20(3).JPG","Photos/BJ/%23%20(4).JPG","Photos/BJ/%23%20(5).JPG","Photos/BJ/%23%20(6).JPG","Photos/BJ/%23%20(7).JPG","Photos/BJ/%23%20(8).JPG","Photos/BJ/%23%20(9).JPG","Photos/BJ/%23%20(10).JPG","Photos/BJ/%23%20(11).JPG","Photos/BJ/%23%20(12).JPG","Photos/BJ/%23%20(13).JPG","Photos/BJ/%23%20(14).JPG","Photos/BJ/%23%20(1).PNG"]},
+ {t:"A Monster Calls",r:"Co. LD",n:13,c:"Lighting",images:["Photos/AMC/%23%20(1).PNG","Photos/AMC/%23%20(2).PNG","Photos/AMC/%23%20(3).PNG","Photos/AMC/%23%20(4).PNG","Photos/AMC/%23%20(5).PNG","Photos/AMC/%23%20(6).PNG","Photos/AMC/%23%20(7).PNG","Photos/AMC/%23%20(8).PNG","Photos/AMC/%23%20(9).PNG","Photos/AMC/%23%20(10).PNG","Photos/AMC/%23%20(11).PNG","Photos/AMC/%23%20(12).PNG","Photos/AMC/%23%20(13).PNG"]},
+ {t:"The Hunchback of Notre Dame",r:"Co. LD",n:33,c:"Lighting",images:["Photos/THOND/%23%20(1).jpg","Photos/THOND/%23%20(2).jpg","Photos/THOND/%23%20(3).jpg","Photos/THOND/%23%20(4).jpg","Photos/THOND/%23%20(5).jpg","Photos/THOND/%23%20(6).jpg","Photos/THOND/%23%20(7).jpg","Photos/THOND/%23%20(8).jpg","Photos/THOND/%23%20(9).jpg","Photos/THOND/%23%20(10).jpg","Photos/THOND/%23%20(11).jpg","Photos/THOND/%23%20(12).jpg","Photos/THOND/%23%20(13).jpg","Photos/THOND/%23%20(14).jpg","Photos/THOND/%23%20(15).jpg","Photos/THOND/%23%20(16).jpg","Photos/THOND/%23%20(17).jpg","Photos/THOND/%23%20(18).jpg","Photos/THOND/%23%20(19).jpg","Photos/THOND/%23%20(20).jpg","Photos/THOND/%23%20(21).jpg","Photos/THOND/%23%20(22).jpg","Photos/THOND/%23%20(23).jpg","Photos/THOND/%23%20(24).jpg","Photos/THOND/%23%20(25).jpg","Photos/THOND/%23%20(26).jpg","Photos/THOND/%23%20(27).jpg","Photos/THOND/%23%20(28).jpg","Photos/THOND/%23%20(29).jpg","Photos/THOND/%23%20(30).jpg","Photos/THOND/%23%20(31).jpg","Photos/THOND/%23%20(32).jpg","Photos/THOND/%23%20(1).PNG"]},
+ {t:"Stuart Little",r:"LD",n:11,c:"Lighting",g:1,images:["Photos/SL/%23%20(1).MOV","Photos/SL/%23%20(1).PNG","Photos/SL/%23%20(2).PNG","Photos/SL/%23%20(3).PNG","Photos/SL/%23%20(4).PNG","Photos/SL/%23%20(5).PNG","Photos/SL/%23%20(6).PNG","Photos/SL/%23%20(7).PNG","Photos/SL/%23%20(8).PNG","Photos/SL/%23%20(9).PNG","Photos/SL/%23%20(10).PNG"]},
+ {t:"RATS!!!",r:"LD",n:4,c:"Lighting",g:1,images:["Photos/RATS!!!/%23%20(1).JPG","Photos/RATS!!!/%23%20(1).MOV","Photos/RATS!!!/%23%20(2).MOV","Photos/RATS!!!/%23%20(3).MOV"]},
+ {t:"Elf Jr.",r:"ASM",n:11,c:"Stage Management",images:["Photos/Elf/%23%20(1).PNG","Photos/Elf/%23%20(2).PNG","Photos/Elf/%23%20(3).PNG","Photos/Elf/%23%20(4).PNG","Photos/Elf/%23%20(5).PNG","Photos/Elf/%23%20(6).PNG","Photos/Elf/%23%20(7).PNG","Photos/Elf/%23%20(8).PNG","Photos/Elf/%23%20(9).PNG","Photos/Elf/%23%20(10).PNG"]},
+ {t:"Descendants",r:"Audio Engineer",n:8,c:"Audio",images:["Photos/Descendants/%23%20(1).MOV","Photos/Descendants/%23%20(1).PNG","Photos/Descendants/%23%20(2).PNG","Photos/Descendants/%23%20(3).PNG","Photos/Descendants/%23%20(4).PNG","Photos/Descendants/%23%20(5).PNG","Photos/Descendants/%23%20(6).PNG","Photos/Descendants/%23%20(7).PNG"]},
+ {t:"Spring Awakening",r:"Audio Engineer",n:16,c:"Audio",images:["Photos/Spring%20Awakening/%23%20(1).MOV","Photos/Spring%20Awakening/%23%20(2).MOV","Photos/Spring%20Awakening/%23%20(3).MOV","Photos/Spring%20Awakening/%23%20(4).MOV","Photos/Spring%20Awakening/%23%20(1).PNG","Photos/Spring%20Awakening/%23%20(2).PNG","Photos/Spring%20Awakening/%23%20(3).PNG","Photos/Spring%20Awakening/%23%20(4).PNG","Photos/Spring%20Awakening/%23%20(5).PNG","Photos/Spring%20Awakening/%23%20(6).PNG","Photos/Spring%20Awakening/%23%20(7).PNG","Photos/Spring%20Awakening/%23%20(8).PNG","Photos/Spring%20Awakening/%23%20(9).PNG","Photos/Spring%20Awakening/%23%20(10).PNG","Photos/Spring%20Awakening/%23%20(11).PNG","Photos/Spring%20Awakening/%23%20(12).PNG"]}
+];
+var GELS=[["#ffb347","Amber"],["#ff4d6d","Rose"],["#4dd2ff","Ice"],["#a78bfa","Lavender"],["#5eead4","Teal"]];
+var cats=["All","Lighting","Stage Management","Audio"],cur="All",root=document.documentElement;
+function $(i){return document.getElementById(i)}
+// followspot
+function spot(e){var p=e.touches?e.touches[0]:e;root.style.setProperty("--x",p.clientX+"px");root.style.setProperty("--y",p.clientY+"px")}
+addEventListener("pointermove",spot);addEventListener("touchmove",spot,{passive:true});
+// gels
+GELS.forEach(function(g,i){var b=document.createElement("button");b.className="gel"+(i?"":" on");b.style.background=g[0];b.style.color=g[0];b.title=g[1];b.setAttribute("aria-label",g[1]+" gel");
+ b.onclick=function(){root.style.setProperty("--a",g[0]);document.querySelectorAll(".gel").forEach(function(x){x.classList.remove("on")});b.classList.add("on")};$("gels").appendChild(b)});
+// blackout
+$("bo").onclick=function(){var on=document.body.classList.toggle("bo");this.classList.toggle("on",on);this.textContent=on?"Lights up":"Blackout"};
+// marquee
+var m=SHOWS.map(function(s){return s.t}).join('<i>&#9679;</i>');$("mq").innerHTML=m+'<i>&#9679;</i>'+m+'<i>&#9679;</i>';
+// roles
+[["Lighting Design",100],["Stage Management",75],["Audio Engineering",60],["Production Management",50]].forEach(function(r){
+ var d=document.createElement("div");d.className="role";d.innerHTML='<span></span><div class="bar"><i></i></div>';d.firstChild.textContent=r[0];d.querySelector("i").dataset.w=r[1];$("roles").appendChild(d)});
+// reveal on scroll
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");var b=e.target.querySelector&&e.target.querySelector("i[data-w]");if(b)b.style.width=b.dataset.w+"%";if(e.target.dataset&&e.target.dataset.w)e.target.style.width=e.target.dataset.w+"%"}})},{threshold:.2});
+function watch(){document.querySelectorAll(".card,.role").forEach(function(c){io.observe(c)})}
+function card(s,i){
+ var b=document.createElement("button");b.className="card";
+ var h=[28,340,215,160,45,270,10,190,300][i%9];
+ var bg=s.images&&s.images[0]?"background-image:url('"+s.images[0]+"')":"background:linear-gradient(135deg,hsl("+h+",60%,30%),hsl("+(h+60)+",55%,10%))";
+ b.innerHTML='<div class="thumb" style="'+bg+'"><span class="cue">CUE '+(i+1)+'</span></div><div class="info"><h3></h3><span></span><small>'+s.n+' photos</small></div>';
+ b.querySelector("h3").textContent=s.t;b.querySelector("span").textContent=s.r;
+ b.onclick=function(){openS(s)};return b}
+function render(){
+ var box=$("list");box.innerHTML="";
+ var it=SHOWS.map(function(s,i){s.i=i;return s}).filter(function(s){return cur=="All"||s.c.split(",").indexOf(cur)>-1});
+ function grid(a){var g=document.createElement("div");g.className="grid";a.forEach(function(s){g.appendChild(card(s,s.i))});box.appendChild(g)}
+ var a=it.filter(function(s){return !s.g}),b=it.filter(function(s){return s.g});
+ if(a.length)grid(a);
+ if(b.length){var h=document.createElement("div");h.className="group";h.textContent="SCAA \u00b7 Production Manager / Lighting Designer";box.appendChild(h);grid(b)}
+ watch()}
+function chips(){var c=$("chips");c.innerHTML="";cats.forEach(function(k){var b=document.createElement("button");b.className="chip"+(k==cur?" on":"");b.textContent=k;b.onclick=function(){cur=k;chips();render()};c.appendChild(b)})}
+function openS(s){
+ $("mt").textContent=s.t;$("ms").textContent=s.r+(s.g?" \u00b7 SCAA":"");
+ var g=$("gal");g.innerHTML="";
+ for(var k=0;k<s.n;k++){var f=document.createElement("figure");f.className="ph";
+  if(s.images&&s.images[k]){var isVideo=s.images[k].toLowerCase().endsWith(".mov");
+   if(isVideo){var v=document.createElement("video");v.controls=true;v.style.maxHeight="600px";var src=document.createElement("source");src.src=s.images[k];src.type="video/mp4";v.appendChild(src);f.appendChild(v)}
+   else{var im=document.createElement("img");im.loading="lazy";im.src=s.images[k];im.alt=s.t+" photo "+(k+1);f.appendChild(im)}}
+  else{var d=document.createElement("div");d.style.height="400px";d.textContent="PHOTO "+(k+1)+"/"+s.n;f.appendChild(d)}
+  g.appendChild(f)}
+ $("modal").classList.add("open");document.body.style.overflow="hidden";$("modal").scrollTop=0}
+function shut(){$("modal").classList.remove("open");document.body.style.overflow=""}
+$("close").onclick=shut;addEventListener("keydown",function(e){if(e.key=="Escape")shut()});
+chips();render();watch();
+</script>
+</body>
+</html>
